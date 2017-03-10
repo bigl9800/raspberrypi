@@ -37,7 +37,12 @@ stream.open()
 #the main sensor reading loop
 while True:
         sensor_data = readadc.readadc(sensor_pin, readadc.PINS.SPICLK, readadc.PINS.SPIMOSI, readadc.PINS.SPIMISO, readadc.PINS.SPICS)
-        stream.write({'x': i, 'y': sensor_data})
+        # try section prevents stopping due to internet reconnection
+        try:
+            stream.write({'x': i, 'y': sensor_data})
+        except socket.error:
+            stream.open
+            stream.write({'x': i, 'y': sensor_data})           
         i += 1
         # delay between stream posts
         time.sleep(0.25)

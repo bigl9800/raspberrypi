@@ -2,6 +2,7 @@ import plotly.plotly as py
 from plotly.graph_objs import Scatter, Layout, Figure
 import time
 import readadc
+import socket
 
 username = 'your_plotly_username'
 api_key = 'your_api_key'
@@ -41,7 +42,7 @@ while True:
         try:
             stream.write({'x': i, 'y': sensor_data})
         except socket.error:
-            stream.open
+            stream.open()
             stream.write({'x': i, 'y': sensor_data})           
         i += 1
         # delay between stream posts
